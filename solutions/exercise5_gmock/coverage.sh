@@ -1,0 +1,1 @@
+gcovr --gcov-executable gcov-12
