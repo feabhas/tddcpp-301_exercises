@@ -7,7 +7,7 @@ jobs:
         runs-on: ubuntu-latest
         environment: build
         container:
-            image: feabhas/gcc11-cmake:4
+            image: feabhas/ubuntu-projects:latest
             options: -u 1001
         steps:
             - name: checkout
