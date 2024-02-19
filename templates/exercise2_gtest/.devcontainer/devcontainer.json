@@ -2,7 +2,7 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.202.3/containers/cpp
 {
 	"name": "C++",
-	"image": "feabhas/gcc11-cmake:4",
+	"image": "feabhas/ubuntu-projects:latest",
 	// "build": {
 	// 	"dockerfile": "Dockerfile",
 	// 	// Update 'VARIANT' to pick an Debian / Ubuntu OS version: debian-11, debian-10, debian-9, ubuntu-21.04, ubuntu-20.04, ubuntu-18.04
@@ -16,7 +16,8 @@
 
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
-		"ms-vscode.cpptools"
+		"ms-vscode.cpptools",
+		"ms-vscode.cmake-tools"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
