@@ -13,7 +13,7 @@ jobs:
             - name: checkout
               uses: actions/checkout@v4
               with:
-                sparse-checkout: solutions
+                # sparse-checkout: solutions
                 fetch-depth: 1  
             - name : build and test Exercise 1
               run: |
@@ -47,3 +47,28 @@ jobs:
                 cmake -S . -B build
                 cmake --build build
                 cmake --build build -- test
+            - name : build Exercise 1 Template
+              run: |
+                cd templates/exercise1_gtest/
+                cmake -S . -B build
+                cmake --build build
+                # cmake --build build -- test  
+            - name : build Exercise 2 Template
+              run: |
+                cd templates/exercise2_gtest/
+                cmake -S . -B build
+                cmake --build build
+                # cmake --build build -- test  
+            - name : build Exercise 4 Template
+              run: |
+                cd templates/exercise4_gmock/
+                cmake -S . -B build
+                cmake --build build
+                # cmake --build build -- test  
+            - name : build Exercise 6 Template
+              run: |
+                cd templates/exercise6_doctest/
+                git clone https://github.com/onqtam/doctest.git
+                cmake -S . -B build
+                cmake --build build
+                # cmake --build build -- test  
