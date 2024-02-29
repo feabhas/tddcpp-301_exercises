@@ -1,9 +1,9 @@
-// Sensor_Adaptor.h
+// ds1820_stub.cpp
 // See project README.md for disclaimer and additional information.
 // Feabhas Ltd
 
 /**
- * @file Sensor_Adaptor.h
+ * @file ds1820.cpp
  * @author Feabhas Limited (training@feabhas.com)
  * @brief
  * @version 0.1
@@ -26,26 +26,50 @@
  * loss was sustained from, or arose out of, the results of, the item, or any
  * services that may be provided by Feabhas.
  */
-#ifndef _Sensor_Adaptor_h_
-#define _Sensor_Adaptor_h_
-
-#include "ISensor.h"
 #include "ds1820.h"
+#include "ISensor.h"
+
+#include <iomanip>
+#include <iostream>
+#include <string>
+#include <sstream>
+using namespace std;
 
 namespace Sensor
 {
-  class Sensor_Adaptor final : public ISensor {
-  public:
-    Sensor_Adaptor()  = default;
+  Ds1820::Ds1820(Resolution resolution) : mask{ resolution } {};
 
-    std::string family_code() override;
-    std::string serial_number() override;
-    float       lastest_reading() override;
+  float Ds1820::convert(uint16_t digital)
+  {
+    digital &= static_cast<uint16_t>(mask);
+    int16_t s_digital = static_cast<int16_t>(digital);
+    return s_digital / 16.0f;
+  }
 
-  private:
-    Ds1820 concrete_sensor{};
-    ROM_t  rom_data{};
-  };
-}
+  ROM_t Ds1820::read_rom()
+  {
+    ROM_t data = {
+      { 0x28, { 0x1, 0x2, 0x3, 0x4, 0x5, 0x6 }, 0x00 },
+    }; //!OCLINT
+    return data;
+  }
 
-#endif
+  void Ds1820::do_conversion() {}
+
+  bool Ds1820::read_scratchpad(scratchpad_data_t* const data)
+  {
+    // default values
+    data->lsb = 0x50;
+    data->msb = 0x05;
+    data->crc = 0;
+    return true;
+  }
+
+  uint8_t Ds1820::calculate_CRC(const uint8_t* data, uint32_t num_of_bytes)
+  {
+    (void)data;
+    (void)num_of_bytes;
+    return 0;
+  }
+
+} // namespace

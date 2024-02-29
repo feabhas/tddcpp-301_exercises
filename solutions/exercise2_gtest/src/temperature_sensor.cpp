@@ -30,7 +30,7 @@ Temperature_sensor::Temperature_sensor(IDisplay& IDisplay_, Ds1820& sensor_) :
 Temperature_sensor::status Temperature_sensor::initialize()
 {
   const ROM_t   rom_data = sensor->read_rom();
-  const uint8_t crc =
+  [[maybe_unused]] const uint8_t crc =
     sensor->calculate_CRC(reinterpret_cast<const uint8_t*>(&rom_data), 7);
 
   // A stub does not test for error conditions
@@ -42,7 +42,7 @@ Temperature_sensor::status Temperature_sensor::initialize()
   family_code << "Family code: 0x" << hex
               << static_cast<uint32_t>(rom_data.rom_code.family_code) << ends;
 
-  int count = display->display(family_code.str().c_str());
+  [[maybe_unused]] int count = display->display(family_code.str().c_str());
   // Error: if count == -1
 
   stringstream serial_number{}; // dynamic buffer
@@ -84,10 +84,10 @@ Temperature_sensor::status Temperature_sensor::run()
   sensor->do_conversion();
   scratchpad_data_t scratchpad{};
 
-  const bool okay = sensor->read_scratchpad(&scratchpad);
+  [[maybe_unused]] const bool okay = sensor->read_scratchpad(&scratchpad);
   // Error: if not okay
 
-  const uint8_t crc = sensor->calculate_CRC(
+  [[maybe_unused]] const uint8_t crc = sensor->calculate_CRC(
     reinterpret_cast<const uint8_t*>(&scratchpad), sizeof(scratchpad) - 1);
 
   // if (scratchpad.crc != crc) {
@@ -96,13 +96,13 @@ Temperature_sensor::status Temperature_sensor::run()
 
   const uint16_t raw_sensor_temp = static_cast<uint16_t>(((scratchpad.msb << 8) | scratchpad.lsb));
 
-  const float deg_C = sensor->convert(raw_sensor_temp);
+  [[maybe_unused]] const float deg_C = sensor->convert(raw_sensor_temp);
   // Error: if (deg_C < -55.0f) or (deg_C > 125.0f)
 
   char buff[20] = {};
-  sprintf(buff, "%02.2fC", deg_C);
+  snprintf(buff, sizeof(buff), "%02.2fC", deg_C);
 
-  const int count = display->display(buff);
+  [[maybe_unused]] const int count = display->display(buff);
   // Error: if count == -1
 
   return status::ok;

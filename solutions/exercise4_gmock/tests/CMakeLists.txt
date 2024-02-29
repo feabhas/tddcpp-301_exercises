@@ -1,10 +1,10 @@
 find_package(GTest CONFIG REQUIRED)
 include(GoogleTest)
 
-add_compile_options(
-  --coverage
-  -fprofile-abs-path
-)
+add_compile_options(--coverage)
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+add_compile_options(-fprofile-abs-path)
+endif()
 add_link_options("--coverage")
 
 add_executable(TemperatureTest 

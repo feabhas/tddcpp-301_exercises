@@ -30,7 +30,6 @@ add_compile_definitions(
 
 FILE (GLOB USER_SRC ${CMAKE_SOURCE_DIR}/src/*.c ${CMAKE_SOURCE_DIR}/src/*.cpp)
 
-
 enable_testing()
 add_subdirectory(tests)
 

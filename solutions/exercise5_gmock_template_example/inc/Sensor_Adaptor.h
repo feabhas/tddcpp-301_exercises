@@ -34,13 +34,13 @@
 
 namespace Sensor
 {
-  class Sensor_Adaptor final : public ISensor {
+  class Sensor_Adaptor {
   public:
     Sensor_Adaptor()  = default;
 
-    std::string family_code() override;
-    std::string serial_number() override;
-    float       lastest_reading() override;
+    std::string family_code();
+    std::string serial_number();
+    float       lastest_reading();
 
   private:
     Ds1820 concrete_sensor{};

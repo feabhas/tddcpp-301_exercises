@@ -2,7 +2,6 @@
 // See project README.md for disclaimer and additional information.
 // Feabhas Ltd
 
-#pragma once
 #ifndef BUFFER_H
 #define BUFFER_H
 
@@ -14,7 +13,6 @@ public:
   enum class Status { Ok, Full };
 
   Buffer()  = default;
-  ~Buffer() = default;
 
   Status             add(int value);
   std::optional<int> get();
@@ -24,7 +22,7 @@ public:
   void               flush();
 
 private:
-  static constexpr int sz = 8;
+  static constexpr int sz = 16;
   unsigned             read{};
   unsigned             write{};
   unsigned             num_items{};
